@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nakib Ifsan | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS for a better aesthetic experience */
+        :root {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #283549; /* Very dark background */
+        }
+        /* Custom scrollbar for a sleeker look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #a1b5db;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a1b5db;
+        }
+
+        /* --- BOLDNESS AND HOVER EFFECTS (UPDATED) --- */
+        /* Gallery item hover effect (More fluid and Bolder animation with GLOW) */
+        .gallery-item {
+            /* Smoother curve, apply to all changes, subtle initial shadow */
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease-in-out;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+        .gallery-item:hover {
+            transform: scale(1.03) translateY(-3px); /* Subtle but noticeable lift and scale */
+            /* Deep shadow for 'pop' + a soft glow effect using an additional layer */
+            box-shadow: 
+                0 0 30px #4484ec, /* The Gold/Cyan Glow */
+                0 25px 50px -12px rgba(0, 0, 0, 0.8); /* Deep bottom shadow */
+            cursor: pointer;
+        }
+
+        /* Aspect Ratio Container (3:2) for consistent gallery sizing */
+        .aspect-ratio-box {
+            position: relative;
+            padding-top: 66.666%; /* 400 / 600 = 0.6666 = 66.666% */
+            height: 0;
+            overflow: hidden;
+        }
+        .aspect-ratio-box img {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Contact icon hover effect for boldness */
+        .contact-icon {
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.3s ease-out; /* Smoother transition */
+        }
+        .contact-icon:hover {
+            transform: translateY(-5px) scale(1.15); /* Slightly more movement */
+            color: #e99116; /* Accent color */
+        }
+
+        /* Lightbox modal with BACKGROUND BLUR effect */
+        .modal {
+            transition: opacity 0.4s ease-in-out;
+            /* Add the blur effect to the background backdrop */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px); /* For Safari support */
+        }
+    </style>
+</head>
+
+<body class="bg-[#0d1117] text-gray-100 antialiased">
+
+    <header class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-sm border-b border-gray-800 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="#" class="text-3xl font-extrabold text-cyan-400 tracking-wider"> </a>
+                <nav class="space-x-8 hidden md:flex">
+                    <a href="#astro" class="text-gray-300 hover:text-cyan-400 transition duration-300 font-medium">Astrophotography</a>
+                    <a href="#street" class="text-gray-300 hover:text-cyan-400 transition duration-300 font-medium">Random Dump</a>
+                    <a href="#gear" class="text-gray-300 hover:text-cyan-400 transition duration-300 font-medium">My Gear</a>
+                    <a href="#contact" class="text-gray-300 hover:text-cyan-400 transition duration-300 font-medium">Contact</a> </nav>
+                <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-cyan-400 focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-900 border-t border-gray-800">
+            <a href="#astro" class="block px-4 py-3 text-sm text-gray-300 hover:bg-gray-800 transition duration-150">Astrophotography</a>
+            <a href="#street" class="block px-4 py-3 text-sm text-gray-300 hover:bg-gray-800 transition duration-150">Street Photography</a>
+            <a href="#gear" class="block px-4 py-3 text-sm text-gray-300 hover:bg-gray-800 transition duration-150">My Gear</a>
+            <a href="#contact" class="block px-4 py-3 text-sm text-gray-300 hover:bg-gray-800 transition duration-150">Contact</a> </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+        <section class="text-center py-16 mb-12">
+            <div class="mb-8">
+                <img src= "IMG_20250922_191113188.jpg"
+                     alt="Profile Picture" 
+                     class="w-36 h-36 object-cover rounded-full mx-auto border-4 border-cyan-400 shadow-xl transition transform hover:scale-105 duration-300"
+                     onerror="this.onerror=null; this.src='https://placehold.co/150x150/1f2937/a5f3fc?text=P'";>
+            </div>
+            
+            <h4 class="text-4xl md:text-3xl font-extrabold tfext-white mb-2 leading-tight">
+                Nakib Ifsan
+            </h4>
+
+            <p class="text-lg text-gray-400 max-w-1xl mx-auto mb-8 font-medium">
+                I’m 16 and currently studying in college. When I’m not buried in books, you’ll probably find me behind a camera. 
+                I love capturing the universe through astrophotography, turning the night sky into art. On the other side, 
+                I also enjoy random street photography, freezing everyday moments and hidden stories from the world around me.
+            </p>
+            
+
+        </section>
+
+        <section id="astro" class="mb-24 pt-16">
+            <h2 class="text-4xl font-extrabold mb-10 text-center text-cyan-400 border-b-4 border-gray-700 pb-4">Astrophotography</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+
+                                <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="1000018365 (1) (1).jpg" data-caption="The Barnard's Loop">
+                     <div class="aspect-ratio-box">
+                        <img src="1000018365 (1) (1).jpg" alt="Aurora" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">The Barnard's Loop</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="Picsart_25-08-29_20-32-06-974.jpg" data-caption="Azizul Haque College X Milky Way Galaxy">
+                    <div class="aspect-ratio-box">
+                        <img src="Picsart_25-08-29_20-32-06-974.jpg" alt="Orion Nebula" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">Azizul Haque College X Milky Way Galaxy</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="Unsaved star recomposition result (3).jpg" data-caption="North America Nebula">
+                    <div class="aspect-ratio-box">
+                        <img src="Unsaved star recomposition result (3).jpg" alt="Orion Nebula" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">North America Nebula</p>
+                    </div>
+                </div>
+                <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="result.jpg" data-caption="Andromeda Galaxy with Triangulum Galaxy">
+                     <div class="aspect-ratio-box">
+                        <img src="result.jpg" alt="Milky Way" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">Andromeda Galaxy with Triangulum Galaxy</p>
+                    </div>
+                </div>
+                <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="self.jpg" data-caption="The Galactic Core behind myself">
+                     <div class="aspect-ratio-box">
+                        <img src="self.jpg" alt="Moon" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">The Galactic Core behind myself</p>
+                    </div>
+                </div>
+
+                                <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="IMG_20250919_173638282.jpg" data-caption="Rho Ophiuchi Cloud Complex">
+                     <div class="aspect-ratio-box">
+                        <img src="IMG_20250919_173638282.jpg" alt="Aurora" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">Rho Ophiuchi Cloud Complex</p>
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+
+        <section id="street" class="mb-24 pt-16">
+            <h2 class="text-4xl font-extrabold mb-10 text-center text-cyan-400 border-b-4 border-gray-700 pb-4">Random Dump</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="IMG_20250918_173430137.jpg" data-caption="The CHAOS">
+                     <div class="aspect-ratio-box">
+                        <img src="IMG_20250918_173430137.jpg" alt="City Lights" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">The CHAOS</p>
+                    </div>
+                </div>
+                <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="1000004778 (1).jpg" data-caption="Feel The THUNDER">
+                     <div class="aspect-ratio-box">
+                        <img src="1000004778 (1).jpg" alt="Pedestrian Crossing" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">Feel The THUNDER</p>
+                    </div>
+                </div>
+                <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="IMG_20250725_191139478.jpg" data-caption="Mama, I am home">
+                     <div class="aspect-ratio-box">
+                        <img src="IMG_20250725_191139478.jpg" alt="Coffee Shop" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">Mama, I am home</p>
+                    </div>
+                </div>
+                 <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="IMG_20250706_080129076.jpg" data-caption="Wanna fly high">
+                     <div class="aspect-ratio-box">
+                        <img src="IMG_20250706_080129076.jpg" alt="Bus Stop" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">Wanna fly high</p>
+                    </div>
+                </div>
+                                 <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="IMG_20250905_181956917 (2).jpg" data-caption="Burning alive??">
+                     <div class="aspect-ratio-box">
+                        <img src="IMG_20250905_181956917 (2).jpg" alt="Bus Stop" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">Burning alive??</p>
+                    </div>
+                </div>
+                                 <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="IMG_20250914_205808_007 (1).jpg" data-caption="The City Lights">
+                     <div class="aspect-ratio-box">
+                        <img src="IMG_20250914_205808_007 (1).jpg" alt="Bus Stop" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">The City Lights</p>
+                    </div>
+                </div>
+                                 <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="IMG_20250915_094716957.jpg" data-caption="Far across the sea">
+                     <div class="aspect-ratio-box">
+                        <img src="IMG_20250915_094716957.jpg" alt="Bus Stop" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">Far across the sea</p>
+                    </div>
+                </div>
+                 <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="IMG_20250918_173501450.jpg" data-caption="Age doesn't matter">
+                     <div class="aspect-ratio-box">
+                        <img src="IMG_20250918_173501450.jpg" alt="Bus Stop" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">Age doesn't matter</p>
+                    </div>
+                </div>
+
+                                 <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="20241107_172041 (3).jpg" data-caption="Ekanto Golaap">
+                     <div class="aspect-ratio-box">
+                        <img src="20241107_172041 (3).jpg" alt="Bus Stop" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">Ekanto Golaap</p>
+                    </div>
+                </div>
+
+                                 <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="IMG_2025-01-26-10-05-32-281.jpg" data-caption="Loving Mother">
+                     <div class="aspect-ratio-box">
+                        <img src="IMG_2025-01-26-10-05-32-281.jpg" alt="Bus Stop" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">Loving Mother</p>
+                    </div>
+                </div>
+
+                                                 <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="IMG_2025-01-26-13-55-48-651.jpg" data-caption="Eyes Never Lie">
+                     <div class="aspect-ratio-box">
+                        <img src="IMG_2025-01-26-13-55-48-651.jpg" alt="Bus Stop" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">Eyes Never Lie</p>
+                    </div>
+                </div>
+
+                                                 <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="IMG_20250527_081444.jpg" data-caption="Azizul Haque College">
+                     <div class="aspect-ratio-box">
+                        <img src="IMG_20250527_081444.jpg" alt="Bus Stop" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">Azizul Haque College</p>
+                    </div>
+                </div>
+
+                                                 <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="IMG_20250709_092403874 (2).jpg" data-caption="MELANCHOLY">
+                     <div class="aspect-ratio-box">
+                        <img src="IMG_20250709_092403874 (2).jpg" alt="Bus Stop" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">MELANCHOLY</p>
+                    </div>
+                </div>
+
+                                                 <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="IMG_20250711_172028151.jpg" data-caption="National Bird">
+                     <div class="aspect-ratio-box">
+                        <img src="IMG_20250711_172028151.jpg" alt="Bus Stop" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">National Bird</p>
+                    </div>
+                </div>
+
+                                                 <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="IMG_20250721_184232952 (2).jpg" data-caption="Mother's Eyes">
+                     <div class="aspect-ratio-box">
+                        <img src="IMG_20250721_184232952 (2).jpg" alt="Bus Stop" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">Mother's Eyes</p>
+                    </div>
+                </div>
+
+                                                 <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="IMG_20250830_091319148.jpg" data-caption="A Presoner??">
+                     <div class="aspect-ratio-box">
+                        <img src="IMG_20250830_091319148.jpg" alt="Bus Stop" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">A Presoner??</p>
+                    </div>
+                </div>
+
+                                                 <div class="gallery-item bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700" data-src="IMG_20250830_172911598.jpg" data-caption="Prodip Shoe Store">
+                     <div class="aspect-ratio-box">
+                        <img src="IMG_20250830_172911598.jpg" alt="Bus Stop" class="w-full h-full object-cover rounded-t-xl">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-400 font-semibold">Prodip Shoe Store</p>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </section>
+
+        <section id="gear" class="pt-16 mb-24">
+            <h2 class="text-4xl font-extrabold mb-10 text-center text-cyan-400 border-b-4 border-gray-700 pb-4">Gears</h2>
+            <div class="max-w-3xl mx-auto"> <div class="bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700">
+                    <h3 class="text-2xl font-extrabold mb-6 text-cyan-300 flex items-center">
+                        
+                        </svg>
+                        
+                    </h3>
+                    <ul class="space-y-6 text-gray-300">
+                        <li class="border-b border-gray-700 pb-3">
+                            <strong class="text-white flex justify-between items-center text-lg">
+                                Nothing Phone 3A
+                                <span class="px-2 py-0.5 text-xs font-extrabold bg-yellow-900 text-yellow-300 rounded-full">astro and street</span>
+                            </strong>
+                            <p class="text-sm text-gray-400 italic mt-1"></p>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="pt-16 pb-16">
+            <h2 class="text-4xl font-extrabold mb-10 text-center text-cyan-400 border-b-4 border-gray-700 pb-4">Contact</h2>
+            <p class="text-center text-lg text-gray-400 max-w-xl mx-auto mb-10">
+                Whether for booking, collaboration, or just to talk gear, connect with me through my channels below.
+            </p>
+
+            <div class="flex justify-center space-x-12">
+                
+                <a href="https://www.instagram.com/nakibifsan" target="_blank" aria-label="Instagram Profile" class="text-gray-300 contact-icon">
+                    <svg class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+                    </svg>
+                </a>
+                
+                <a href="mailto:nakibifsanpc@gmail.com" aria-label="Email Address" class="text-gray-300 contact-icon">
+                    <svg class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="20" height="16" x="2" y="4" rx="2"/>
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    </svg>
+                </a>
+
+                <a href="https://www.facebook.com/nakibifsan" target="_blank" aria-label="Facebook Profile" class="text-gray-300 contact-icon">
+                    <svg class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                    </svg>
+                </a>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-900 border-t border-gray-800 mt-16 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500">
+            <p>&copy; All rights reserved.</p>
+            <p class="mt-2 text-sm"></p>
+        </div>
+    </footer>
+
+    <div id="lightbox-modal" class="modal fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black bg-opacity-90 opacity-0 pointer-events-none">
+        <div class="relative w-full max-w-5xl max-h-full">
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-white text-3xl font-bold p-2 rounded-full hover:bg-white/10 transition z-[110]">
+                &times;
+            </button>
+            <img id="lightbox-image" src="" alt="Enlarged Photograph" class="max-w-full max-h-[85vh] w-auto h-auto mx-auto rounded-lg shadow-2xl">
+            <p id="lightbox-caption" class="text-center text-gray-300 mt-4 text-lg font-light"></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const modal = document.getElementById('lightbox-modal');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            // --- Mobile Menu Toggle ---
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // --- Lightbox Functions ---
+
+            function openModal(src, caption) {
+                lightboxImage.src = src;
+                lightboxCaption.textContent = caption;
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modal.classList.add('opacity-100');
+            }
+
+            function closeModal() {
+                modal.classList.remove('opacity-100');
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                // Wait for transition before clearing content
+                setTimeout(() => {
+                    lightboxImage.src = '';
+                    lightboxCaption.textContent = '';
+                }, 400); 
+            }
+
+            // Event listeners for opening modal
+            galleryItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const src = item.getAttribute('data-src');
+                    const caption = item.getAttribute('data-caption');
+                    openModal(src, caption);
+                });
+            });
+
+            // Event listener for closing modal
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                // Close if clicking outside the image (on the dark backdrop)
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Close with ESC key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.classList.contains('opacity-0')) {
+                    closeModal();
+                }
+            });
+
+            // --- Smooth Scrolling for Navigation ---
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        // Close mobile menu if open
+                        if (!mobileMenu.classList.contains('hidden')) {
+                             mobileMenu.classList.add('hidden');
+                        }
+
+                        // Scroll to element with an offset for fixed header
+                        const offset = 80; // Height of fixed header
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: "smooth"
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
