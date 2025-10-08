@@ -74,6 +74,22 @@
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px); /* For Safari support */
         }
+
+        /* --- NEW CSS FOR ZOOM FEATURE --- */
+        #lightbox-image {
+            transition: transform 0.1s ease-out; /* Smoother zoom/pan transition */
+            transform-origin: center center;
+        }
+
+        /* Class for when the image is zoomed, enabling panning cursor */
+        .zoomable {
+            cursor: grab !important;
+        }
+        .zoomable:active {
+            cursor: grabbing !important;
+        }
+        /* --- END NEW CSS --- */
+
     </style>
 </head>
 
@@ -408,6 +424,9 @@
             <button id="close-modal-btn" class="absolute top-4 right-4 text-white text-3xl font-bold p-2 rounded-full hover:bg-white/10 transition z-[110]">
                 &times;
             </button>
+            <button id="reset-zoom-btn" class="absolute top-4 left-4 text-white text-sm font-semibold p-2 bg-gray-700/80 rounded-lg hover:bg-gray-600 transition z-[110] opacity-0 pointer-events-none">
+                Reset Zoom
+            </button>
             <img id="lightbox-image" src="" alt="Enlarged Photograph" class="max-w-full max-h-[85vh] w-auto h-auto mx-auto rounded-lg shadow-2xl">
             <p id="lightbox-caption" class="text-center text-gray-300 mt-4 text-lg font-light"></p>
         </div>
@@ -422,17 +441,139 @@
             const closeModalBtn = document.getElementById('close-modal-btn');
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
+            // NEW ELEMENTS FOR ZOOM
+            const resetZoomBtn = document.getElementById('reset-zoom-btn');
+
+            let currentScale = 1;
+            let currentX = 0;
+            let currentY = 0;
+            let isPanning = false;
+            let startX, startY;
+            const maxScale = 5;
+            const minScale = 1;
+            const scaleStep = 0.2;
 
             // --- Mobile Menu Toggle ---
             mobileMenuBtn.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
             });
 
-            // --- Lightbox Functions ---
+            // --- NEW: Zoom & Pan Functions ---
+
+            function applyTransform() {
+                // Apply the new scale and translation to the image
+                lightboxImage.style.transform = `scale(${currentScale}) translate(${currentX}px, ${currentY}px)`;
+                
+                // Show/hide the reset button and toggle the 'zoomable' class
+                if (currentScale > minScale) {
+                    resetZoomBtn.classList.remove('opacity-0', 'pointer-events-none');
+                    lightboxImage.classList.add('zoomable');
+                } else {
+                    resetZoomBtn.classList.add('opacity-0', 'pointer-events-none');
+                    lightboxImage.classList.remove('zoomable');
+                    currentX = 0;
+                    currentY = 0;
+                }
+            }
+
+            function resetZoom() {
+                currentScale = 1;
+                currentX = 0;
+                currentY = 0;
+                applyTransform();
+            }
+            
+            // Zoom in/out via mouse wheel
+            modal.addEventListener('wheel', (e) => {
+                // Only zoom if modal is open and the event is over the image/modal content
+                if (modal.classList.contains('opacity-100')) {
+                    e.preventDefault(); // Prevent page scroll when zooming
+                    
+                    const rect = lightboxImage.getBoundingClientRect();
+                    const mouseX = e.clientX - rect.left;
+                    const mouseY = e.clientY - rect.top;
+
+                    // Calculate the coordinates relative to the center of the unscaled image
+                    const deltaX = (mouseX - rect.width / 2) / currentScale;
+                    const deltaY = (mouseY - rect.height / 2) / currentScale;
+
+                    // Determine the new scale
+                    let newScale;
+                    if (e.deltaY < 0) {
+                        newScale = Math.min(maxScale, currentScale + scaleStep); // Zoom In
+                    } else {
+                        newScale = Math.max(minScale, currentScale - scaleStep); // Zoom Out
+                    }
+
+                    // Calculate the proportional change in position to keep the focus point stable
+                    if (newScale !== currentScale) {
+                        const scaleChange = newScale / currentScale;
+                        
+                        // Recalculate translation to keep the point under the cursor
+                        // Adjust currentX/Y by the difference in delta*scale
+                        currentX += deltaX * (currentScale - newScale);
+                        currentY += deltaY * (currentScale - newScale);
+                        
+                        currentScale = newScale;
+                        applyTransform();
+                    }
+                }
+            }, { passive: false });
+
+
+            // Pan (drag) functionality for zoomed image
+            lightboxImage.addEventListener('mousedown', (e) => {
+                if (currentScale > minScale) {
+                    e.preventDefault();
+                    isPanning = true;
+                    startX = e.clientX;
+                    startY = e.clientY;
+                    lightboxImage.style.cursor = 'grabbing';
+                }
+            });
+
+            modal.addEventListener('mousemove', (e) => {
+                if (!isPanning) return;
+                e.preventDefault();
+                
+                // Calculate movement since mousedown
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+
+                // Update position, using the inverse of the current scale for speed consistency
+                currentX += dx / currentScale;
+                currentY += dy / currentScale;
+                
+                // Keep the last known mouse position
+                startX = e.clientX;
+                startY = e.clientY;
+
+                applyTransform();
+            });
+
+            modal.addEventListener('mouseup', () => {
+                isPanning = false;
+                if (currentScale > minScale) {
+                    lightboxImage.style.cursor = 'grab';
+                } else {
+                    lightboxImage.style.cursor = 'default';
+                }
+            });
+            
+            modal.addEventListener('mouseleave', () => {
+                isPanning = false; // Stop panning if mouse leaves the modal
+            });
+
+            // Reset zoom on button click
+            resetZoomBtn.addEventListener('click', resetZoom);
+
+
+            // --- Lightbox Functions (Modified) ---
 
             function openModal(src, caption) {
                 lightboxImage.src = src;
                 lightboxCaption.textContent = caption;
+                resetZoom(); // Ensure image is reset before opening
                 modal.classList.remove('opacity-0', 'pointer-events-none');
                 modal.classList.add('opacity-100');
             }
@@ -444,6 +585,7 @@
                 setTimeout(() => {
                     lightboxImage.src = '';
                     lightboxCaption.textContent = '';
+                    resetZoom(); // Reset transforms when closing the modal
                 }, 400); 
             }
 
