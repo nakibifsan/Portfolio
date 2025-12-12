@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nakib Ifsan | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;600&family=Courier+Prime&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: #f9f6f1 url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      color: #2b2b2b;
+      font-family: 'Lora', serif;
+      line-height: 1.8;
+      /* REMOVED: overflow-x: hidden to improve mobile scrolling */
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      border-bottom: 1px solid #d4d4d4;
+      background: #f9f6f1e6;
+      backdrop-filter: blur(6px);
+      transition: all 0.3s ease;
+    }
+    header:hover { box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+
+    h1,h2,h3 { font-family: 'Playfair Display', serif; color: #111; }
+
+    .section-title { text-align:center; font-size:2.2rem; margin-bottom:1.25rem; position:relative; }
+    .section-title::after { content:''; position:absolute; left:50%; bottom:-8px; transform:translateX(-50%); width:60px; height:1px; background:#000; }
+
+    .fade-in { opacity:0; transform:translateY(16px); transition: all 0.7s ease; }
+    .fade-in.show { opacity:1; transform:translateY(0); }
+
+    .grid-gallery {
+      display: grid;
+      /* REVERTED: Back to 3 columns per row */
+      grid-template-columns: repeat(3, 1fr);
+      /* MODIFIED: Increased gap slightly for more spacing */
+      gap: 1rem; 
+      align-items: start;
+    }
+    @media (max-width: 1024px) {
+      /* Keeping 2 columns on medium screens for slightly bigger images */
+      .grid-gallery { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .grid-gallery { 
+        grid-template-columns: 1fr;
+        gap: 1rem; /* Adjusted mobile gap slightly */
+      }
+    }
+
+    .photo-frame {
+      border:1px solid #000;
+      background:#fff;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+      transition: box-shadow 0.3s ease;
+      overflow:hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .photo-frame:hover {
+      box-shadow:0 8px 24px rgba(0,0,0,0.12);
+    }
+    
+    .photo-frame .image-wrapper {
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      width: 100%;
+    }
+
+    .photo-frame img {
+      display:block;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transition: transform 0.3s ease;
+    }
+    
+    .photo-frame:hover img {
+      transform: scale(1.05);
+    }
+
+    figcaption {
+      font-family:'Courier Prime', monospace;
+      font-size:0.9rem;
+      color:#333;
+      text-align:center;
+      padding:0.4rem 0;
+      border-top:1px solid #e6e6e6;
+      background:#fafafa;
+      width: 100%;
+    }
+
+    .illustration-line {
+      width:100%;
+      height:1px;
+      background-image:linear-gradient(to right, transparent, #999, transparent);
+      margin:2.5rem 0;
+    }
+
+    footer {
+      border-top:1px solid #e6e6e6;
+      text-align:center;
+      font-size:0.9rem;
+      padding:2rem 0;
+      color:#666;
+      font-family:'Courier Prime', monospace;
+    }
+
+    /* Lightbox */
+    #lightbox {
+      position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+      padding: 1rem;
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(4px);
+      pointer-events:none; opacity:0; transform:scale(0.98);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      z-index:9999; flex-direction:column;
+    }
+    #lightbox.active { pointer-events:auto; opacity:1; transform:scale(1); }
+    #lightbox .lightbox-inner {
+      max-width:92%; width:100%;
+      max-height: 90vh;
+      display:flex; flex-direction:column; align-items:center;
+    }
+    #lightbox img {
+      width:auto;
+      max-width: 95vw;
+      max-height: 85vh;
+      border:2px solid #000;
+      background:#fff;
+      border-radius:6px;
+      box-shadow:0 8px 30px rgba(0,0,0,0.08);
+      transition:transform 0.2s ease;
+      cursor: zoom-in;
+    }
+    #lightbox .caption { margin-top:0.9rem; font-family:'Courier Prime', monospace; color:#222; text-align:center; padding:0 1rem; }
+    #lightbox .close-btn {
+      position:absolute; top:18px; right:18px;
+      background:transparent; border:none;
+      font-size:2rem; color:#111; cursor:pointer;
+    }
+
+    @keyframes captionIn { from { opacity:0; transform:translateY(8px);} to { opacity:1; transform:translateY(0);} }
+    #lightbox .caption { animation: captionIn 0.45s ease both; }
+
+    @media (max-width: 768px) {
+      .section-title { font-size:1.6rem; }
+      /* REMOVED: header .nav margin-top reset as Tailwind handles it better */
+      main { padding:0.5rem; }
+      
+      #lightbox { padding: 0.5rem; }
+      /* Adjusted max-size for better use of mobile screen */
+      #lightbox img {
+        max-width: 95vw; 
+        max-height: 85vh;
+      }
+      
+      /* Improvement: Make nav links slightly larger and more spaced for touch */
+      header .nav a {
+        padding: 0.2rem 0.1rem;
+        font-size: 0.75rem; /* text-xs */
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="sticky top-0 z-50 p-3 sm:p-4">
+    <div class="max-w-6xl mx-auto flex justify-center sm:justify-between items-center flex-wrap sm:flex-nowrap">
+      <h1 class="text-2xl sm:text-3xl font-bold text-center sm:text-left">Nakib Ifsan</h1>
+      <nav class="nav space-x-3 sm:space-x-6 text-sm uppercase tracking-wider font-semibold mt-2 sm:mt-0">
+        <a href="#astro" class="section-link">Astrophotos</a>
+        <a href="#street" class="section-link">Random Dump</a>
+        <a href="#gear" class="section-link">My Gear</a>
+        <a href="#contact" class="section-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-2 sm:px-3 py-6 sm:py-10">
+    <section class="text-center mb-16 fade-in">
+      <img src="0.webp" alt="Profile" class="w-32 h-32 object-cover rounded-full mx-auto mb-4 border border-black">
+      <h2 class="text-3xl font-bold mb-3">Nakib Ifsan</h2>
+      <p class="text-gray-800 max-w-2xl mx-auto">I’m 17 and currently studying in college. When I’m not buried in books, you’ll probably find me behind a camera. I love capturing the universe through astrophotos, turning the night sky into art. On the other side, I also enjoy random street photography, freezing everyday moments and hidden stories from the world around me.</p>
+    </section>
+
+    <div class="illustration-line"></div>
+
+    <section id="astro" class="mb-12 fade-in">
+      <h2 class="section-title">Astrophotos</h2>
+      <div class="grid-gallery">
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="1.webp" loading="lazy" alt="The Barnard's Loop"></div>
+          <figcaption><b>The Barnard's Loop</b> </br> Total Exposure Time: 40 minutes  </figcaption>
+        </figure>
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="2.webp" loading="lazy" alt="Watching Those Galaxies"></div>
+          <figcaption><b>Majestic Sky</b> </br> Total Exposure Time: 40 minutes </figcaption>
+        </figure>
+
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="3.webp" loading="lazy" alt="Milky Way over Azizul Haque College"></div>
+          <figcaption><b>Milky Way Galaxy X Azizul Haque College</b> </br> Total Exposure Time: 30 minutes  </figcaption>
+        </figure>
+                <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="4.webp" loading="lazy" alt="Rho Ophiuchi Cloud Complex"></div>
+          <figcaption><b>Rho Ophiuchi Cloud Complex</b> </br> Total Exposure Time: 21 minutes </figcaption>
+        </figure>
+                <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="5.webp" loading="lazy" alt="North America Nebula"></div>
+          <figcaption><b>North America Nebula</b> </br> Total Exposure Time: 21 minutes </figcaption>
+        </figure>
+
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="6.webp" loading="lazy" alt="Luna"></div>
+          <figcaption><b>Luna </b> </br> 4 Image Merged </figcaption>
+        </figure>
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="7.webp" loading="lazy" alt="California Nebula with Pleiades"></div>
+          <figcaption><b>California Nebula with Pleiades</b> </br> Total Exposure Time: 45 minutes </figcaption>
+        </figure>
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="8.webp" loading="lazy" alt="The Heart and Soul Nebula"></div>
+          <figcaption><b>The Heart and Soul Nebula</b> </br> Total Exposure Time: 37 minutes </figcaption>
+        </figure>
+
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="9.webp" loading="lazy" alt="The Galactic Core behind myself"></div>
+          <figcaption><b>The Galactic Core behind myself</b> </br> Total Exposure Time: 30 minutes </figcaption>
+        </figure>
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="10.webp" loading="lazy" alt="Watching Those Galaxies"></div>
+          <figcaption><b>Watching Those Galaxies</b> </br> Total Exposure Time: 28 minutes </figcaption>
+        </figure>
+                <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="11.webp" loading="lazy" alt="C/2025 A6 (Lemmon)"></div>
+          <figcaption><b>C/2025 A6 (Lemmon)</b> </br> Total Exposure Time: 6 minutes </figcaption>
+        </figure>
+                <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="12.webp" loading="lazy" alt="Star Trails"></div>
+          <figcaption><b>Star Trails</b> </br> Total Exposure Time: 37 minutes </figcaption>
+        </figure>
+
+        
+      </div>
+    </section>
+
+    <div class="illustration-line"></div>
+
+    <section id="street" class="mb-12">
+      <h2 class="section-title">Random Dump</h2>
+      <div class="grid-gallery">
+
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="13.webp" loading="lazy" alt="Feel The Thunder"></div>
+          <figcaption> <b>Feel The THUNDER </b></figcaption>
+        </figure>
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="14.webp" loading="lazy" alt="Smoking Kills"></div>
+          <figcaption> <b>Smoking Kills</b></figcaption>
+        </figure>
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="15.webp" loading="lazy" alt="Last Resort"></div>
+          <figcaption> <b>Last Resort</b></figcaption>
+        </figure>
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="16.webp" loading="lazy" alt="Do or Die"></div>
+          <figcaption> <b>Do or Die</b></figcaption>
+        </figure>
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="17.webp" loading="lazy" alt="Harvesting"></div>
+          <figcaption> <b>Harvesting</b></figcaption>
+        </figure>
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="18.webp" loading="lazy" alt="Age doesn't matter"></div>
+          <figcaption> <b>Age doesn't matter</b></figcaption>
+        </figure>
+
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="19.webp" loading="lazy" alt="Burning alive??"></div>
+          <figcaption> <b>Burning alive??</b></figcaption>
+        </figure>
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="20.webp" loading="lazy" alt="Lacking Behind"></div>
+          <figcaption> <b>Lacking Behind</b></figcaption>
+        </figure>        
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="21.webp" loading="lazy" alt="The City Lights"></div>
+          <figcaption> <b>The City Lights</b></figcaption>
+        </figure>
+                <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="22.webp" loading="lazy" alt="Wanna fly high"></div>
+          <figcaption> <b>Wanna fly high</b></figcaption>
+        </figure>
+                <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="23.webp" loading="lazy" alt="Free From The Cage"></div>
+          <figcaption> <b>Free From The Cage</b></figcaption>
+        </figure>
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="24.webp" loading="lazy" alt="MELANCHOLY"></div>
+          <figcaption> <b>MELANCHOLY</b></figcaption>
+        </figure>
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="25.webp" loading="lazy" alt="Family"></div>
+          <figcaption> <b>Family</b></figcaption>
+        </figure>
+                <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="26.webp" loading="lazy" alt="Loving Mother"></div>
+          <figcaption> <b>Loving Mother</b></figcaption>
+        </figure>
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="27.webp" loading="lazy" alt="Eyes Never Lie"></div>
+          <figcaption> <b>Eyes Never Lie</b></figcaption>
+        </figure>
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="28.webp" loading="lazy" alt="Ekanto Golaap"></div>
+          <figcaption> <b>Ekanto Golaap</b></figcaption>
+        </figure>
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="29.webp" loading="lazy" alt="Like Father, Like Son"></div>
+          <figcaption> <b>Like Father, Like Son</b></figcaption>
+        </figure>
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="30.webp" loading="lazy" alt="Foresaken"></div>
+          <figcaption> <b>Foresaken</b></figcaption>
+        </figure>
+        <figure class="photo-frame cursor-pointer">
+          <div class="image-wrapper"><img src="31.webp" loading="lazy" alt="Sunbathe"></div>
+          <figcaption> <b>Sunbathe</b></figcaption>
+        </figure>
+
+
+
+
+
+      </div>
+    </section>
+
+    <div class="illustration-line"></div>
+
+    <section id="gear" class="mb-12">
+      <h2 class="section-title">My Gear</h2>
+      <div class="border border-black bg-white p-6">
+        
+        <ul style="list-style-type:circle;"></ul>
+          <li><strong>Nothing Phone 3A</strong><br><span class="text-gray-700 Light text-sm">Used for both astrophotography and street captures.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="illustration-line"></div>
+
+    <section id="contact" class="text-center mb-8">
+      <h2 class="section-title">Contact</h2>
+      <p class="max-w-md mx-auto mb-4">Got an idea, project or collab in mind? Hit me up through the links below!</p>
+      <div class="flex justify-center gap-6">
+        
+        <a href="mailto:nakibifsanpc@gmail.com" class="underline"><b>Email</b></a>
+        
+        <a href="https://www.instagram.com/nakibifsan" target="_blank" class="underline"><b>Instagram</b></a>
+        
+        <a href="https://www.facebook.com/nakibifsan" target="_blank" class="underline"><b>Facebook</b></a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p style="font-weight: 600;">"I would rather die drunk, broke at 34 and have people at a dinner table talk about me <br> than live to be rich and sober at 90 and nobody remember who I was."</p>
+
+  </footer>
+
+  <div id="lightbox" aria-hidden="true">
+    <button class="close-btn" aria-label="Close">&times;</button>
+    <div class="lightbox-inner">
+      <img src="" alt="Enlarged photo" id="lightbox-image">
+      <div class="caption" id="lightbox-caption"></div>
+    </div>
+  </div>
+
+  
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Fade-in observer
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+      }, { threshold: 0.18 });
+      // Only observe the top sections, as the bottom sections are now hard-coded to appear.
+      // This is the fix: sections that weren't loading have had the 'fade-in' class removed.
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+      // Nav Link Scrolling Fix
+      document.querySelectorAll('.section-link').forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            const headerHeight = document.querySelector('header').offsetHeight;
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 16;
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+          }
+        });
+      });
+
+      // --- Lightbox Code ---
+
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-image');
+      const caption = document.getElementById('lightbox-caption');
+      const closeBtn = lightbox.querySelector('.close-btn');
+      // const paperSound = document.getElementById('paperSound'); // Retained for context, but not used
+
+      let currentIndex = 0;
+      const allFrames = Array.from(document.querySelectorAll('.photo-frame'));
+      
+      let scale = 1;
+      let isPanning = false;
+      let startPan = { x: 0, y: 0 };
+      let currentPan = { x: 0, y: 0 };
+      let lastPan = { x: 0, y: 0 };
+      let startDist = 0;
+      let lastTap = 0;
+      let swipeImgStartX = 0;
+
+      function applyTransform() {
+        lightboxImg.style.transform = `translate(${currentPan.x}px, ${currentPan.y}px) scale(${scale})`;
+        lightboxImg.style.cursor = scale > 1 ? 'grab' : 'zoom-in';
+      }
+
+      function resetZoom() { 
+        scale = 1; 
+        resetPan();
+      }
+      function resetPan() {
+        isPanning = false;
+        startPan = { x: 0, y: 0 };
+        currentPan = { x: 0, y: 0 };
+        lastPan = { x: 0, y: 0 };
+        applyTransform();
+      }
+
+      function openLightbox(img, figcap) {
+        const srcToMatch = img.src.split('/').pop();
+        currentIndex = allFrames.findIndex(f => f.querySelector('img').src.split('/').pop() === srcToMatch);
+        if (currentIndex === -1) currentIndex = 0;
+        
+        lightboxImg.src = img.src;
+        caption.textContent = figcap ? figcap.textContent : '';
+        lightbox.classList.add('active');
+        lightbox.setAttribute('aria-hidden', 'false');
+        
+        // Use resetZoom to ensure both zoom and pan are reset
+        resetZoom();
+
+        // try { paperSound.currentTime = 0; paperSound.play(); } catch (err) {}
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove('active');
+        lightbox.setAttribute('aria-hidden', 'true');
+        setTimeout(() => { 
+          lightboxImg.src = ''; 
+          caption.textContent = ''; 
+          // Use resetZoom to ensure both zoom and pan are reset
+          resetZoom();
+        }, 300);
+      }
+
+      function showNext(direction) {
+        if (!allFrames.length) return;
+        currentIndex = (currentIndex + direction + allFrames.length) % allFrames.length;
+        const frame = allFrames[currentIndex];
+        const img = frame.querySelector('img');
+        const figcap = frame.querySelector('figcaption');
+        
+        lightboxImg.src = img.src;
+        caption.textContent = figcap ? figcap.textContent : '';
+        
+        // Reset state for new image
+        resetZoom();
+      }
+
+      // 1. Open Lightbox
+      allFrames.forEach(frame => {
+        frame.addEventListener('click', () => {
+          const img = frame.querySelector('img');
+          const figcap = frame.querySelector('figcaption');
+          openLightbox(img, figcap);
+        });
+      });
+
+      // 2. Close Lightbox
+      closeBtn.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+      
+      // 3. Keyboard Navigation
+      document.addEventListener('keydown', e => {
+        if (!lightbox.classList.contains('active')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') showNext(1);
+        if (e.key === 'ArrowLeft') showNext(-1);
+      });
+
+      // 4. Swipe Navigation (on lightbox background)
+      let swipeStartX = 0;
+      lightbox.addEventListener('touchstart', e => { 
+        // Only track swipe on the background, not the image itself
+        if (e.target === lightbox) swipeStartX = e.touches[0].clientX; 
+      }, { passive: true });
+      lightbox.addEventListener('touchend', e => {
+        if (e.target === lightbox) {
+          const endX = e.changedTouches[0].clientX;
+          if (endX - swipeStartX > 60) showNext(-1);
+          if (swipeStartX - endX > 60) showNext(1);
+        }
+      });
+
+      // 5. Image Zoom & Pan (Mouse)
+      lightboxImg.addEventListener('wheel', e => {
+        e.preventDefault();
+        scale += e.deltaY * -0.005;
+        scale = Math.min(Math.max(1, scale), 5);
+        if (scale === 1) resetPan();
+        applyTransform();
+      });
+
+      lightboxImg.addEventListener('mousedown', e => {
+        if (e.button !== 0) return;
+        if (scale === 1) {
+          // New: Single click on un-zoomed image zooms in
+          scale = 2.5;
+          applyTransform();
+          return;
+        }
+        e.preventDefault();
+        isPanning = true;
+        startPan.x = e.clientX - lastPan.x;
+        startPan.y = e.clientY - lastPan.y;
+        lightboxImg.style.cursor = 'grabbing';
+      });
+
+      lightboxImg.addEventListener('mousemove', e => {
+        if (!isPanning) return;
+        e.preventDefault();
+        currentPan.x = e.clientX - startPan.x;
+        currentPan.y = e.clientY - startPan.y;
+        applyTransform();
+      });
+
+      lightboxImg.addEventListener('mouseup', e => {
+        if (isPanning) {
+          isPanning = false;
+          lastPan.x = currentPan.x;
+          lastPan.y = currentPan.y;
+          lightboxImg.style.cursor = 'grab';
+        }
+      });
+      
+      lightboxImg.addEventListener('mouseleave', () => {
+        if (isPanning) {
+          isPanning = false;
+          lastPan.x = currentPan.x;
+          lastPan.y = currentPan.y;
+          if (scale > 1) lightboxImg.style.cursor = 'grab';
+        }
+      });
+
+      // --- 6. Image Zoom & Pan (Touch) - REVISED LOGIC ---
+      
+      lightboxImg.addEventListener('touchstart', e => {
+        // 1-Finger Gestures (Swipe/Pan)
+        if (e.touches.length === 1) { 
+            swipeImgStartX = e.touches[0].clientX; // Always track start for both pan/swipe
+            
+            if (scale > 1) { // If zoomed in, it's a pan
+                e.preventDefault(); 
+                isPanning = true;
+                // Calculate pan start based on *current* offset (lastPan)
+                startPan.x = e.touches[0].clientX - lastPan.x; 
+                startPan.y = e.touches[0].clientY - lastPan.y;
+            } else {
+                isPanning = false; // Allow swipe behavior if scale is 1
+            }
+        } 
+        // 2-Finger Gestures (Pinch Zoom)
+        else if (e.touches.length === 2) { 
+            e.preventDefault(); 
+            isPanning = false; 
+            swipeImgStartX = 0; // Disable swipe detection when pinching
+            startDist = Math.hypot(
+                e.touches[0].clientX - e.touches[1].clientX,
+                e.touches[0].clientY - e.touches[1].clientY
+            );
+        }
+      }, { passive: false }); // Needs to be false for preventDefault in pan/pinch
+
+      lightboxImg.addEventListener('touchmove', e => {
+          // Only prevent default if we are actively manipulating the image (pan or pinch)
+          if (scale > 1 || e.touches.length === 2) {
+              e.preventDefault(); 
+          }
+          
+          if (e.touches.length === 1 && isPanning) { // Pan
+              currentPan.x = e.touches[0].clientX - startPan.x;
+              currentPan.y = e.touches[0].clientY - startPan.y;
+              applyTransform();
+          } 
+          else if (e.touches.length === 2) { // Pinch zoom
+              isPanning = false; 
+              const dist = Math.hypot(
+                  e.touches[0].clientX - e.touches[1].clientX,
+                  e.touches[0].clientY - e.touches[1].clientY
+              );
+              const diff = dist - startDist;
+              scale += diff * 0.008;
+              scale = Math.min(Math.max(1, scale), 5);
+              
+              if (scale < 1.05) { resetPan(); } // Reset pan if scale returns close to 1
+              else { applyTransform(); }
+              
+              startDist = dist;
+          }
+      }, { passive: false });
+
+      lightboxImg.addEventListener('touchend', e => {
+        // 1. End Pan (Pan takes priority when zoomed in)
+        if (isPanning) { 
+            lastPan.x = currentPan.x;
+            lastPan.y = currentPan.y;
+            isPanning = false; 
+            // If scale is still > 1, we exit here to prevent swipe/tap
+            return; 
+        }
+
+        // Check if only one touch ended and no pan was active
+        if (e.touches.length === 0 && e.changedTouches.length === 1) {
+            
+            // 2. Image Swipe (Only if scale is 1)
+            if (scale === 1 && swipeImgStartX !== 0) {
+                const endX = e.changedTouches[0].clientX;
+                const swipeDist = Math.abs(endX - swipeImgStartX);
+                const SWIPE_THRESHOLD = 80;
+
+                if (swipeDist > SWIPE_THRESHOLD) { 
+                    if (endX > swipeImgStartX) { showNext(-1); } // Swipe Right
+                    else { showNext(1); } // Swipe Left
+                    swipeImgStartX = 0;
+                    return; // Swipe takes priority over double-tap
+                }
+            }
+            
+            // 3. Double Tap Zoom (Only if scale is 1 and no pan/swipe occurred)
+            const now = new Date().getTime();
+            const DOUBLE_TAP_TIME = 300;
+            
+            if (now - lastTap < DOUBLE_TAP_TIME) {
+                e.preventDefault(); // Prevent accidental zoom on mobile browser
+                scale = scale > 1 ? 1 : 2.5; 
+                if (scale === 1) resetPan();
+                applyTransform(); 
+            }
+            lastTap = now; // Update lastTap for the next check
+        }
+
+        swipeImgStartX = 0; // Reset swipe tracker
+      });
+
+    });
+  </script>
+</body>
+</html>
