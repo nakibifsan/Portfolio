@@ -30,6 +30,7 @@
     .section-title { text-align:center; font-size:2.2rem; margin-bottom:1.25rem; position:relative; }
     .section-title::after { content:''; position:absolute; left:50%; bottom:-8px; transform:translateX(-50%); width:60px; height:1px; background:#000; }
 
+    /* NOTE: .fade-in CSS is kept, but removed from HTML elements for compatibility */
     .fade-in { opacity:0; transform:translateY(16px); transition: all 0.7s ease; }
     .fade-in.show { opacity:1; transform:translateY(0); }
 
@@ -181,7 +182,7 @@
   </header>
 
   <main class="max-w-6xl mx-auto px-2 sm:px-3 py-6 sm:py-10">
-    <section class="text-center mb-16 fade-in">
+    <section class="text-center mb-16">
       <img src="0.webp" alt="Profile" class="w-32 h-32 object-cover rounded-full mx-auto mb-4 border border-black">
       <h2 class="text-3xl font-bold mb-3">Nakib Ifsan</h2>
       <p class="text-gray-800 max-w-2xl mx-auto">I’m 17 and currently studying in college. When I’m not buried in books, you’ll probably find me behind a camera. I love capturing the universe through astrophotos, turning the night sky into art. On the other side, I also enjoy random street photography, freezing everyday moments and hidden stories from the world around me.</p>
@@ -189,58 +190,58 @@
 
     <div class="illustration-line"></div>
 
-    <section id="astro" class="mb-12 fade-in">
+    <section id="astro" class="mb-12">
       <h2 class="section-title">Astrophotos</h2>
       <div class="grid-gallery">
         <figure class="photo-frame cursor-pointer">
-          <div class="image-wrapper"><img src="1.webp"  alt="The Barnard's Loop"></div>
+          <div class="image-wrapper"><img src="1.webp" loading="lazy" alt="The Barnard's Loop"></div>
           <figcaption><b>The Barnard's Loop</b> </br> Total Exposure Time: 40 minutes  </figcaption>
         </figure>
         <figure class="photo-frame cursor-pointer">
-          <div class="image-wrapper"><img src="2.webp"  alt="Watching Those Galaxies"></div>
+          <div class="image-wrapper"><img src="2.webp" loading="lazy" alt="Watching Those Galaxies"></div>
           <figcaption><b>Majestic Sky</b> </br> Total Exposure Time: 40 minutes </figcaption>
         </figure>
 
         <figure class="photo-frame cursor-pointer">
-          <div class="image-wrapper"><img src="3.webp" alt="Milky Way over Azizul Haque College"></div>
+          <div class="image-wrapper"><img src="3.webp" loading="lazy" alt="Milky Way over Azizul Haque College"></div>
           <figcaption><b>Milky Way Galaxy X Azizul Haque College</b> </br> Total Exposure Time: 30 minutes  </figcaption>
         </figure>
                 <figure class="photo-frame cursor-pointer">
-          <div class="image-wrapper"><img src="4.webp"  alt="Rho Ophiuchi Cloud Complex"></div>
+          <div class="image-wrapper"><img src="4.webp" loading="lazy" alt="Rho Ophiuchi Cloud Complex"></div>
           <figcaption><b>Rho Ophiuchi Cloud Complex</b> </br> Total Exposure Time: 21 minutes </figcaption>
         </figure>
                 <figure class="photo-frame cursor-pointer">
-          <div class="image-wrapper"><img src="5.webp"  alt="North America Nebula"></div>
+          <div class="image-wrapper"><img src="5.webp" loading="lazy" alt="North America Nebula"></div>
           <figcaption><b>North America Nebula</b> </br> Total Exposure Time: 21 minutes </figcaption>
         </figure>
 
         <figure class="photo-frame cursor-pointer">
-          <div class="image-wrapper"><img src="6.webp"  alt="Luna"></div>
+          <div class="image-wrapper"><img src="6.webp" loading="lazy" alt="Luna"></div>
           <figcaption><b>Luna </b> </br> 4 Image Merged </figcaption>
         </figure>
         <figure class="photo-frame cursor-pointer">
-          <div class="image-wrapper"><img src="7.webp"  alt="California Nebula with Pleiades"></div>
+          <div class="image-wrapper"><img src="7.webp" loading="lazy" alt="California Nebula with Pleiades"></div>
           <figcaption><b>California Nebula with Pleiades</b> </br> Total Exposure Time: 45 minutes </figcaption>
         </figure>
         <figure class="photo-frame cursor-pointer">
-          <div class="image-wrapper"><img src="8.webp"  alt="The Heart and Soul Nebula"></div>
+          <div class="image-wrapper"><img src="8.webp" loading="lazy" alt="The Heart and Soul Nebula"></div>
           <figcaption><b>The Heart and Soul Nebula</b> </br> Total Exposure Time: 37 minutes </figcaption>
         </figure>
 
         <figure class="photo-frame cursor-pointer">
-          <div class="image-wrapper"><img src="9.webp" alt="The Galactic Core behind myself"></div>
+          <div class="image-wrapper"><img src="9.webp" loading="lazy" alt="The Galactic Core behind myself"></div>
           <figcaption><b>The Galactic Core behind myself</b> </br> Total Exposure Time: 30 minutes </figcaption>
         </figure>
         <figure class="photo-frame cursor-pointer">
-          <div class="image-wrapper"><img src="10.webp" alt="Watching Those Galaxies"></div>
+          <div class="image-wrapper"><img src="10.webp" loading="lazy" alt="Watching Those Galaxies"></div>
           <figcaption><b>Watching Those Galaxies</b> </br> Total Exposure Time: 28 minutes </figcaption>
         </figure>
                 <figure class="photo-frame cursor-pointer">
-          <div class="image-wrapper"><img src="11.webp"  alt="C/2025 A6 (Lemmon)"></div>
+          <div class="image-wrapper"><img src="11.webp" loading="lazy" alt="C/2025 A6 (Lemmon)"></div>
           <figcaption><b>C/2025 A6 (Lemmon)</b> </br> Total Exposure Time: 6 minutes </figcaption>
         </figure>
                 <figure class="photo-frame cursor-pointer">
-          <div class="image-wrapper"><img src="12.webp" alt="Star Trails"></div>
+          <div class="image-wrapper"><img src="12.webp" loading="lazy" alt="Star Trails"></div>
           <figcaption><b>Star Trails</b> </br> Total Exposure Time: 37 minutes </figcaption>
         </figure>
 
@@ -384,12 +385,12 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Fade-in observer
+      // NOTE: The IntersectionObserver logic is now mostly redundant since we removed
+      // the 'fade-in' class from all major sections, but the code remains to prevent errors.
       const observer = new IntersectionObserver(entries => {
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
       }, { threshold: 0.18 });
-      // Only observe the top sections, as the bottom sections are now hard-coded to appear.
-      // This is the fix: sections that weren't loading have had the 'fade-in' class removed.
+      // This will now find few or zero elements, ensuring content loads instantly.
       document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
       // Nav Link Scrolling Fix
@@ -407,13 +408,13 @@
         });
       });
 
-      // --- Lightbox Code ---
+      // --- Lightbox Code (Unchanged) ---
 
       const lightbox = document.getElementById('lightbox');
       const lightboxImg = document.getElementById('lightbox-image');
       const caption = document.getElementById('lightbox-caption');
       const closeBtn = lightbox.querySelector('.close-btn');
-      // const paperSound = document.getElementById('paperSound'); // Retained for context, but not used
+      // const paperSound = document.getElementById('paperSound'); 
 
       let currentIndex = 0;
       const allFrames = Array.from(document.querySelectorAll('.photo-frame'));
@@ -570,47 +571,45 @@
         }
       });
 
-      // --- 6. Image Zoom & Pan (Touch) - REVISED LOGIC ---
+      // --- 6. Image Zoom & Pan (Touch) ---
       
       lightboxImg.addEventListener('touchstart', e => {
         // 1-Finger Gestures (Swipe/Pan)
         if (e.touches.length === 1) { 
-            swipeImgStartX = e.touches[0].clientX; // Always track start for both pan/swipe
+            swipeImgStartX = e.touches[0].clientX; 
             
-            if (scale > 1) { // If zoomed in, it's a pan
+            if (scale > 1) { 
                 e.preventDefault(); 
                 isPanning = true;
-                // Calculate pan start based on *current* offset (lastPan)
                 startPan.x = e.touches[0].clientX - lastPan.x; 
                 startPan.y = e.touches[0].clientY - lastPan.y;
             } else {
-                isPanning = false; // Allow swipe behavior if scale is 1
+                isPanning = false; 
             }
         } 
         // 2-Finger Gestures (Pinch Zoom)
         else if (e.touches.length === 2) { 
             e.preventDefault(); 
             isPanning = false; 
-            swipeImgStartX = 0; // Disable swipe detection when pinching
+            swipeImgStartX = 0; 
             startDist = Math.hypot(
                 e.touches[0].clientX - e.touches[1].clientX,
                 e.touches[0].clientY - e.touches[1].clientY
             );
         }
-      }, { passive: false }); // Needs to be false for preventDefault in pan/pinch
+      }, { passive: false }); 
 
       lightboxImg.addEventListener('touchmove', e => {
-          // Only prevent default if we are actively manipulating the image (pan or pinch)
           if (scale > 1 || e.touches.length === 2) {
               e.preventDefault(); 
           }
           
-          if (e.touches.length === 1 && isPanning) { // Pan
+          if (e.touches.length === 1 && isPanning) { 
               currentPan.x = e.touches[0].clientX - startPan.x;
               currentPan.y = e.touches[0].clientY - startPan.y;
               applyTransform();
           } 
-          else if (e.touches.length === 2) { // Pinch zoom
+          else if (e.touches.length === 2) { 
               isPanning = false; 
               const dist = Math.hypot(
                   e.touches[0].clientX - e.touches[1].clientX,
@@ -620,7 +619,7 @@
               scale += diff * 0.008;
               scale = Math.min(Math.max(1, scale), 5);
               
-              if (scale < 1.05) { resetPan(); } // Reset pan if scale returns close to 1
+              if (scale < 1.05) { resetPan(); } 
               else { applyTransform(); }
               
               startDist = dist;
@@ -628,16 +627,13 @@
       }, { passive: false });
 
       lightboxImg.addEventListener('touchend', e => {
-        // 1. End Pan (Pan takes priority when zoomed in)
         if (isPanning) { 
             lastPan.x = currentPan.x;
             lastPan.y = currentPan.y;
             isPanning = false; 
-            // If scale is still > 1, we exit here to prevent swipe/tap
             return; 
         }
 
-        // Check if only one touch ended and no pan was active
         if (e.touches.length === 0 && e.changedTouches.length === 1) {
             
             // 2. Image Swipe (Only if scale is 1)
@@ -647,10 +643,10 @@
                 const SWIPE_THRESHOLD = 80;
 
                 if (swipeDist > SWIPE_THRESHOLD) { 
-                    if (endX > swipeImgStartX) { showNext(-1); } // Swipe Right
-                    else { showNext(1); } // Swipe Left
+                    if (endX > swipeImgStartX) { showNext(-1); } 
+                    else { showNext(1); } 
                     swipeImgStartX = 0;
-                    return; // Swipe takes priority over double-tap
+                    return; 
                 }
             }
             
@@ -659,19 +655,18 @@
             const DOUBLE_TAP_TIME = 300;
             
             if (now - lastTap < DOUBLE_TAP_TIME) {
-                e.preventDefault(); // Prevent accidental zoom on mobile browser
+                e.preventDefault(); 
                 scale = scale > 1 ? 1 : 2.5; 
                 if (scale === 1) resetPan();
                 applyTransform(); 
             }
-            lastTap = now; // Update lastTap for the next check
+            lastTap = now; 
         }
 
-        swipeImgStartX = 0; // Reset swipe tracker
+        swipeImgStartX = 0; 
       });
 
     });
   </script>
 </body>
-
 </html>
